@@ -1,8 +1,6 @@
-import {News} from "./news";
+export interface NewsRepository<News> {
 
-export interface NewsRepository<T> {
-
-  fetchNews(date: String):Promise<News[]>;
+  fetchNews(date: Date):Promise<News[]>;
 
   createNews(news: News): void;
 

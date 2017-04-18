@@ -33,14 +33,19 @@ public class NewsManagerImplTest {
     
     @Test
     public void testCreateNews() {
-        News news  = newsManager.createNews("Test", "Test", LocalDate.now());
+        News news = new News("Test", "Test", LocalDate.now());
+        news  = newsManager.createNews(news);
         assertTrue(news.getSubject().equals("Test"));
     }
 
     @Test
     public void testUpdateNews() {
-        News news = newsManager.createNews("Test", "Test", LocalDate.now());
-        newsManager.updateNews(news.getId(), "Test2", "Test2", LocalDate.now());
+        News news = new News("Test", "Test", LocalDate.now());
+        news = newsManager.createNews(news);
+
+        news.setSubject("Test2");
+        news.setContent("Test2");
+        newsManager.updateNews(news);
         
         news = newsRepository.findOne(news.getId());
         assertTrue(news.getSubject().equals("Test2"));
@@ -48,9 +53,8 @@ public class NewsManagerImplTest {
 
     @Test
     public void testFetchNews() {
-
-        newsManager.createNews("Test", "Test", LocalDate.now());
-        newsManager.createNews("Test2", "Test2", LocalDate.now());
+        newsManager.createNews(new News("Test", "Test", LocalDate.now()));
+        newsManager.createNews(new News("Test2", "Test2", LocalDate.now()));
         
         List<News> news = newsManager.fetchNews(LocalDate.now());
         

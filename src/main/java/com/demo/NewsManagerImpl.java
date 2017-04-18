@@ -23,19 +23,19 @@ public class NewsManagerImpl implements NewsManager {
     private Logger log = Logger.getLogger(NewsManagerImpl.class);
             
     @PersistenceContext
-    protected EntityManager em;
+    private EntityManager em;
     
     @Autowired
     private NewsRepository newsRepository;
     
     @Override
-    public News createNews(String subject, String content, LocalDate created) {
-        return newsRepository.save(new News(subject, content, created));
+    public News createNews(News news) {
+        return newsRepository.save(news);
     }
 
     @Override
-    public void updateNews(Long id, String subject, String content, LocalDate created) {
-        em.merge(new News(id, subject, content, created));
+    public void updateNews(News news) {
+        em.merge(news);
     }
 
     @Override

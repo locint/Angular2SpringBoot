@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {NewsService} from "./news.service";
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app works!';
+
+  constructor(private newsService: NewsService) {
+  }
+
+  fetchNews() {
+    return this.newsService.fetchNews(new Date());
+  }
+
 }
