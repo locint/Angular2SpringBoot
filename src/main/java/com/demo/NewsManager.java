@@ -9,10 +9,10 @@ import java.util.List;
  */
 public interface NewsManager {
     
-    public News createNews(News newsDto);
+    News createNews(News newsDto);
 
-    public void updateNews(News newsDto);
+    void updateNews(News newsDto);
 
-    public List<News> fetchNews(LocalDate date);
+    List<News> fetchNews(LocalDate date);
 
 }

@@ -4,6 +4,7 @@ import {NewsRepository} from "./news-repository";
 import {Http, URLSearchParams, Response} from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
+import {DatePipe} from "@angular/common";
 
 export const NEWS: News[] = [];
 
@@ -13,7 +14,9 @@ export class NewsService implements NewsRepository<News> {
   fetchNews(date: Date): Promise<News[]> {
 
     let body = new URLSearchParams();
-    body.set('date', date.toString());
+    let datePipe = new DatePipe("en-US");
+
+    body.set('date', datePipe.transform(date, 'dd/MM/yyyy').toString());
 
     this._http.post('http://localhost:8080/fetchNews', body).toPromise()
       .then(this.extractData)
