@@ -1,6 +1,7 @@
+import {Observable} from "rxjs/Observable";
 export interface NewsRepository<News> {
 
-  fetchNews(date: Date):Promise<News[]>;
+  fetchNews(date: Date):Observable<News[]>;
 
   createNews(news: News): void;
 
