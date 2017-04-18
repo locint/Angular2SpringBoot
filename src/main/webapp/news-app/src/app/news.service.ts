@@ -21,7 +21,8 @@ export class NewsService implements NewsRepository<News> {
     this._http.post('http://localhost:8080/fetchNews', body).toPromise()
       .then(this.extractData)
       .catch(this.handleError);
-
+    Promise.resolve(NEWS);
+    console.log(NEWS);
     return Promise.resolve(NEWS)
   }
 
