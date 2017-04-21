@@ -2,12 +2,12 @@ package com.demo;
 
 import org.assertj.core.util.Lists;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -16,6 +16,7 @@ import java.util.List;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
@@ -40,7 +41,6 @@ public class NewsControllerTest {
         this.mockMvc = standaloneSetup(newsController).build();
     }
 
-    @Ignore
     @Test
     public void testFetchNews() throws Exception {
         
@@ -50,15 +50,11 @@ public class NewsControllerTest {
 
         when(newsManager.fetchNews(LocalDate.now())).thenReturn(mockList);
 
-        mockMvc.perform(get("/fetchNews")
-                .header("Access-Control-Request-Method", "POST")
-                .header("Origin", "http://localhost:4200"))
+        mockMvc.perform(post("/fetchNews")
+                .param("date","01/01/2017"))
                 .andExpect(status().isOk());
-        
-        mockMvc.perform(get("/test")
-                .header("Access-Control-Request-Method", "POST")
-                .header("Origin", "http://localhost:4200"))
-                .andExpect(status().isNotFound());
 
+        mockMvc.perform(get("/test"))
+                .andExpect(status().isNotFound());
     }
 }
