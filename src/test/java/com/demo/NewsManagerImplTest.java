@@ -21,9 +21,6 @@ import static org.junit.Assert.assertTrue;
 public class NewsManagerImplTest {
     
     @Autowired
-    private NewsManager newsManager;
-    
-    @Autowired
     private NewsRepository newsRepository;
 
     @Before
@@ -34,18 +31,18 @@ public class NewsManagerImplTest {
     @Test
     public void testCreateNews() {
         News news = new News("Test", "Test", LocalDate.now());
-        news  = newsManager.createNews(news);
+        news  = newsRepository.save(news);
         assertTrue(news.getSubject().equals("Test"));
     }
 
     @Test
     public void testUpdateNews() {
         News news = new News("Test", "Test", LocalDate.now());
-        news = newsManager.createNews(news);
+        news = newsRepository.save(news);
 
         news.setSubject("Test2");
         news.setContent("Test2");
-        newsManager.updateNews(news);
+        newsRepository.save(news);
         
         news = newsRepository.findOne(news.getId());
         assertTrue(news.getSubject().equals("Test2"));
@@ -53,10 +50,10 @@ public class NewsManagerImplTest {
 
     @Test
     public void testFetchNews() {
-        newsManager.createNews(new News("Test", "Test", LocalDate.now()));
-        newsManager.createNews(new News("Test2", "Test2", LocalDate.now()));
+        newsRepository.save(new News("Test", "Test", LocalDate.now()));
+        newsRepository.save(new News("Test2", "Test2", LocalDate.now()));
         
-        List<News> news = newsManager.fetchNews(LocalDate.now());
+        List<News> news = newsRepository.findByCreated(LocalDate.now());
         
         assertTrue(news.size()==2);
     }

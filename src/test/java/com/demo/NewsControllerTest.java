@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standal
 public class NewsControllerTest {
 
     @Mock
-    private NewsManager newsManager;
+    private NewsRepository newsRepository;
 
     private MockMvc mockMvc;
     
@@ -48,10 +48,10 @@ public class NewsControllerTest {
 
         mockList.add(new News("Test", "Test2", LocalDate.now()));
 
-        when(newsManager.fetchNews(LocalDate.now())).thenReturn(mockList);
+        when(newsRepository.findByCreated(LocalDate.now())).thenReturn(mockList);
 
         mockMvc.perform(post("/fetchNews")
-                .param("date","01/01/2017"))
+                .param("date","01.01.2017"))
                 .andExpect(status().isOk());
 
         mockMvc.perform(get("/test"))
