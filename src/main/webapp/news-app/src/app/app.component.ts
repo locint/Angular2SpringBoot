@@ -24,6 +24,7 @@ export class AppComponent {
 
   createNews() {
     this.newsService.createNews(this.newsForm);
+    this.fetchNews();
   }
 
   changePage(wantedPage: String){
