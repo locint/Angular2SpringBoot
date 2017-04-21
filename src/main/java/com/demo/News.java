@@ -1,9 +1,11 @@
 package com.demo;
 
+import com.demo.util.LocalDateDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
 
 /**
  * @author LocInt
@@ -21,8 +23,9 @@ public class News implements Serializable {
     @Column(nullable = false)
     private String content;
 
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     @Column(nullable = false)
-    private Date created;
+    private LocalDate created;
 
     public Long getId() {
         return id;
@@ -48,25 +51,25 @@ public class News implements Serializable {
         this.content = content;
     }
 
-    public Date getCreated() {
+    public LocalDate getCreated() {
         return created;
     }
 
-    public void setCreated(Date created) {
+    public void setCreated(LocalDate created) {
         this.created = created;
     }
 
     public News(String subject, String content, LocalDate created) {
         this.subject = subject;
         this.content = content;
-        this.created = java.sql.Date.valueOf(created);
+        this.created = created;
     }
 
     public News(Long id, String subject, String content, LocalDate created) {
         this.id = id;
         this.subject = subject;
         this.content = content;
-        this.created = java.sql.Date.valueOf(created);
+        this.created = created;
     }
 
     public News() {

@@ -11,6 +11,8 @@ import {News} from "./news";
 export class AppComponent {
 
   news: News[];
+  newsForm : News;
+  page: String;
 
   fetchNews() {
   this.newsService.fetchNews(new Date()).subscribe((news: News[]) => {
@@ -20,6 +22,20 @@ export class AppComponent {
   console.log(this.news);
   }
 
+  createNews() {
+    this.newsService.createNews(this.newsForm);
+  }
+
+  changePage(wantedPage: String){
+    this.page = wantedPage;
+}
+
   constructor(private newsService: NewsService) {
+  }
+
+  ngOnInit() {
+    this.newsForm = new News();
+    this.page = 'news';
+    this.fetchNews();
   }
 }

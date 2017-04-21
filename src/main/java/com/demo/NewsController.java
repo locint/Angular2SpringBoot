@@ -15,20 +15,25 @@ import java.util.List;
 public class NewsController {
 
     @Autowired
-    private NewsManager newsManager;
+    private NewsRepository newsRepository;
 
     @RequestMapping("/fetchNews")
-    public @ResponseBody List<News> fetchNews(@RequestParam("date") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate date) {
-        return newsManager.fetchNews(date);
+    public @ResponseBody List<News> fetchNews(@RequestParam("date") @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate date) {
+        return newsRepository.findByCreated(date);
     }
 
     @RequestMapping("/createNews")
     public @ResponseBody void createNews(@RequestBody News news) {
-        newsManager.createNews(news);
+        newsRepository.save(news);
     }
 
     @RequestMapping("/updateNews")
     public @ResponseBody void updateNews(@RequestBody News news) {
-        newsManager.updateNews(news);
+        newsRepository.save(news);
+    }
+
+    @RequestMapping("/deleteNews")
+    public @ResponseBody void deleteNews(@RequestParam("id") Long id) {
+        newsRepository.delete(id);
     }
 }
