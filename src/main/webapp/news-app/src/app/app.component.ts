@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {NewsService} from "./news.service";
 import {News} from "./news";
 
@@ -11,15 +11,17 @@ import {News} from "./news";
 export class AppComponent {
 
   news: News[];
-  newsForm : News;
+  newsForm: News;
   page: String;
+  subjects: Map<String, String>;
+  subject: String;
 
   fetchNews() {
-  this.newsService.fetchNews(new Date()).subscribe((news: News[]) => {
+    this.newsService.fetchNews(new Date()).subscribe((news: News[]) => {
       this.news = news;
     });
-  //For debug purposes
-  console.log(this.news);
+    //For debug purposes
+    console.log(this.news);
   }
 
   createNews() {
@@ -27,9 +29,10 @@ export class AppComponent {
     this.fetchNews();
   }
 
-  changePage(wantedPage: String){
+  changePage(wantedPage: String) {
     this.page = wantedPage;
-}
+    this.subject = this.subjects.get(wantedPage);
+  }
 
   constructor(private newsService: NewsService) {
   }
@@ -37,6 +40,10 @@ export class AppComponent {
   ngOnInit() {
     this.newsForm = new News();
     this.page = 'news';
+    this.subjects = new Map<String, String>();
+    this.subjects.set('news', "Uutiset");
+    this.subjects.set('new', "Lisää");
+    this.subject = this.subjects.get(this.page);
     this.fetchNews();
   }
 }
