@@ -18,7 +18,7 @@ public class NewsController {
     private NewsManager newsManager;
 
     @RequestMapping("/fetchNews")
-    public @ResponseBody List<News> fetchNews(@RequestParam("date") @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate date) {
+    public @ResponseBody List<News> fetchNews(@RequestParam("date") @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate date) {
         return newsManager.fetchNews(date);
     }
 

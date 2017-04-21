@@ -14,7 +14,7 @@ export class NewsService implements NewsRepository<News> {
 
     let body = new URLSearchParams();
     let datePipe = new DatePipe("en-US");
-    body.set('date', datePipe.transform(date, 'dd/MM/yyyy').toString());
+    body.set('date', datePipe.transform(date, 'dd-MM-yyyy').toString());
 
     return this._http.post('http://localhost:8080/fetchNews', body).map((response: Response) => {
       return <News[]>response.json();
