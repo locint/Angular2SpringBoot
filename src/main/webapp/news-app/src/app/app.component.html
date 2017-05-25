@@ -56,6 +56,7 @@
           <th>Aihe</th>
           <th>Sisältö</th>
           <th>Aika</th>
+          <th></th>
         </tr>
         </thead>
         <tbody>
@@ -64,6 +65,11 @@
           <td>{{n.subject}}</td>
           <td>{{n.content}}</td>
           <td>{{n.created.dayOfMonth + "." + n.created.monthValue + "." + n.created.year}}</td>
+          <td>
+            <div class="tooltip-host">
+              <a (click)="deleteNews(n.id)" style="font-size: 18px">Poista</a>
+            </div>
+          </td>
         </tr>
         </tbody>
       </table>

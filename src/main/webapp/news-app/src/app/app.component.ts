@@ -29,9 +29,13 @@ export class AppComponent {
     this.fetchNews();
   }
 
-  changePage(wantedPage: String) {
-    this.page = wantedPage;
-    this.subject = this.subjects.get(wantedPage);
+  changePage(page: String) {
+    this.page = page;
+    this.subject = this.subjects.get(page);
+  }
+
+  deleteNews(id: Number){
+    this.newsService.deleteNews(id);
   }
 
   constructor(private newsService: NewsService) {
