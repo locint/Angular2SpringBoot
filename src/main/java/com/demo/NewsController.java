@@ -1,6 +1,8 @@
 package com.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +20,8 @@ public class NewsController {
     private NewsRepository newsRepository;
 
     @RequestMapping("/fetchNews")
-    public @ResponseBody List<News> fetchNews(@RequestParam("date") @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate date) {
-        return newsRepository.findByCreated(date);
+    public @ResponseBody Page<List<News>> fetchNews(Pageable pageable, @RequestParam("date") @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate date) {
+        return newsRepository.findByCreated(pageable, date);
     }
 
     @RequestMapping("/createNews")

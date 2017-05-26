@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {NewsService} from "./news.service";
 import {News} from "./news";
+import {Page} from "./page";
 
 @Component({
   selector: 'app-root',
@@ -17,8 +18,8 @@ export class AppComponent {
   subject: String;
 
   fetchNews() {
-    this.newsService.fetchNews(new Date()).subscribe((news: News[]) => {
-      this.news = news;
+    this.newsService.fetchNews(new Date()).subscribe((news: Page) => {
+      this.news = news.content;
     });
     //For debug purposes
     console.log(this.news);

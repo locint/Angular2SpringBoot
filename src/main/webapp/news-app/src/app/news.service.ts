@@ -6,16 +6,17 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import {DatePipe} from "@angular/common";
 import {Observable} from "rxjs/Observable";
+import {Page} from "./page";
 
 @Injectable()
 export class NewsService implements NewsRepository<News> {
 
-  fetchNews(date: Date): Observable<News[]> {
+  fetchNews(date: Date): Observable<Page> {
     let body = new URLSearchParams();
     let datePipe = new DatePipe("en-US");
     body.set('date', datePipe.transform(date, 'dd.MM.yyyy').toString());
     return this._http.post('http://localhost:8080/fetchNews', body).map((response: Response) => {
-      return <News[]>response.json();
+      return <Page>response.json();
     });
   }
 

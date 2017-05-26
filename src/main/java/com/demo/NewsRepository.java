@@ -5,6 +5,8 @@
  */
 package com.demo;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 import java.time.LocalDate;
 import java.util.List;
@@ -14,5 +16,5 @@ import java.util.List;
  * @author LocInt
  */
 public interface NewsRepository extends CrudRepository<News, Long>  {
-    List<News> findByCreated(LocalDate date);
+    Page<List<News>> findByCreated(Pageable pageable, LocalDate date);
 }
