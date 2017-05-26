@@ -5,6 +5,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
@@ -52,9 +55,10 @@ public class NewsManagerImplTest {
     public void testFetchNews() {
         newsRepository.save(new News("Test", "Test", LocalDate.now()));
         newsRepository.save(new News("Test2", "Test2", LocalDate.now()));
+        Pageable pageable = new PageRequest(0, 3);
+
+        Page<List<News>> news = newsRepository.findByCreated(pageable, LocalDate.now());
         
-        List<News> news = newsRepository.findByCreated(LocalDate.now());
-        
-        assertTrue(news.size()==2);
+        assertTrue(news.getContent().size()==2);
     }
 }

@@ -7,7 +7,11 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -32,23 +36,29 @@ public class NewsControllerTest {
     private NewsRepository newsRepository;
 
     private MockMvc mockMvc;
-    
+
     @InjectMocks
     private NewsController newsController;
 
+    @InjectMocks
+    private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
+
     @Before
     public void setUp() {
-        this.mockMvc = standaloneSetup(newsController).build();
+        this.mockMvc = standaloneSetup(newsController).setCustomArgumentResolvers(pageableArgumentResolver).build();
     }
 
     @Test
     public void testFetchNews() throws Exception {
-        
+
         List<News> mockList = Lists.newArrayList();
+        Pageable pageable = new PageRequest(0, 3);
 
         mockList.add(new News("Test", "Test2", LocalDate.now()));
 
-        when(newsRepository.findByCreated(LocalDate.now())).thenReturn(mockList);
+        Page expectedPage = new PageImpl(mockList);
+
+        when(newsRepository.findByCreated(pageable ,LocalDate.now())).thenReturn(expectedPage);
 
         mockMvc.perform(post("/fetchNews")
                 .param("date","01.01.2017"))
